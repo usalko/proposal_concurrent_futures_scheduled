@@ -1,7 +1,7 @@
 import threading
 import time
 from concurrent.futures.thread import ThreadPoolExecutor
-from typing import Optional
+from typing import Optional, Callable, Any
 
 from proposal.concurrent.futures.scheduled.delayed_queue import DelayedQueue
 from proposal.concurrent.futures.scheduled.scheduled_future import ScheduledFuture
@@ -91,6 +91,9 @@ class ScheduledThreadPoolExecutor(ThreadPoolExecutor):
 
     def schedule_with_fixed_delay(self, initial_delay: float, delay: float, fn, *args, **kwargs):
         return self._schedule_future(time.time() + initial_delay, -delay, fn, *args, **kwargs)
+
+    def submit(self, fn, *args, **kwargs):
+        return self._schedule_future(time.time(), 0, fn, *args, **kwargs)
 
     def shutdown(self, wait: bool = True) -> None:
         self._work_queue.shutdown()
