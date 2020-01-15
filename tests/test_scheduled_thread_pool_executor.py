@@ -5,7 +5,7 @@ from unittest import TestCase
 from proposal.concurrent.futures.scheduled.scheduled_thread_pool_executor import ScheduledThreadPoolExecutor
 
 
-class ScheduleAtFixedRateCondition(object):
+class AssertCondition(object):
 
     def __init__(self) -> None:
         super().__init__()
@@ -41,32 +41,32 @@ class TestScheduledThreadPoolExecutor(TestCase):
     def test_schedule_at_fixed_rate(self):
         with ScheduledThreadPoolExecutor(max_workers=1) as executor:
             start_time = time.time()
-            asert_condition = ScheduleAtFixedRateCondition()
-            periodic_future = executor.schedule_at_fixed_rate(0.2, 0.2, asert_condition.test_method, 2)
+            assert_condition = AssertCondition()
+            periodic_future = executor.schedule_at_fixed_rate(0.2, 0.2, assert_condition.test_method, 2)
             self.assertTrue(periodic_future.is_periodic())
-            self.assertEqual(asert_condition.result(), 2)
+            self.assertEqual(assert_condition.result(), 2)
             delay = time.time() - start_time
             self.assertTrue(delay > 0.4)
 
     def test_schedule_at_fixed_delay(self):
         with ScheduledThreadPoolExecutor(max_workers=1) as executor:
             start_time = time.time()
-            asert_condition = ScheduleAtFixedRateCondition()
+            assert_condition = AssertCondition()
             periodic_future1 = executor.schedule_with_fixed_delay(0.2, 0.2,
-                                                                  asert_condition.test_method_with_sleep, 2, 0.2)
+                                                                  assert_condition.test_method_with_sleep, 2, 0.2)
             self.assertTrue(periodic_future1.is_periodic())
-            self.assertEqual(asert_condition.result(), 2)
+            self.assertEqual(assert_condition.result(), 2)
             delay = time.time() - start_time
             self.assertTrue(delay > 0.5)
 
     def test_shutdown(self):
         with ScheduledThreadPoolExecutor(max_workers=1) as executor:
             start_time = time.time()
-            asert_condition = ScheduleAtFixedRateCondition()
+            assert_condition = AssertCondition()
             periodic_future1 = executor.schedule_with_fixed_delay(0.2, 0.2,
-                                                                  asert_condition.test_method_with_sleep, 2, 0.2)
+                                                                  assert_condition.test_method_with_sleep, 2, 0.2)
             self.assertTrue(periodic_future1.is_periodic())
-            self.assertEqual(asert_condition.result(), 2)
+            self.assertEqual(assert_condition.result(), 2)
 
             # SHUTDOWN POOL
             executor.shutdown()
@@ -74,3 +74,14 @@ class TestScheduledThreadPoolExecutor(TestCase):
             delay = time.time() - start_time
             self.assertTrue(delay > 0.5)
             self.assertTrue(delay < 1)
+
+    def test_submit(self):
+        with ScheduledThreadPoolExecutor(max_workers=1) as executor:
+            start_time = time.time()
+            assert_condition = AssertCondition()
+            executor.submit(assert_condition.test_method_with_sleep, 1, 0.2)
+            last_future = executor.submit(assert_condition.test_method_with_sleep, 1, 0.2)
+
+            last_future.result()
+            delay = time.time() - start_time
+            self.assertTrue(delay > 0.4)
