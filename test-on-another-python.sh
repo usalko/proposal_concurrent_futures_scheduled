@@ -1,5 +1,14 @@
 #!/bin/bash
 
+###############################################################################
+# Script Name	: test-on-another-python.sh
+# Description	: Run tests/test_scheduled_thread_pool_executor.py on different
+#             : pythons
+# Args       	: Vali python version name (like 3.5.0)
+# Author      : Ivan Usalko
+# Email      	: ivict@rambler.ru
+###############################################################################
+
 PYTHON_VERSION=${1:-3.5.0}
 PYTHON_VERSION_MAJOR=$(echo "$PYTHON_VERSION"| cut -d'.' -f 1)
 PYTHON_VERSION_MINOR=$(echo "$PYTHON_VERSION"| cut -d'.' -f 2)

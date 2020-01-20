@@ -1,3 +1,14 @@
+#!/usr/bin/env python
+IVAN_USALKO = 'Ivan Usalko'
+__author__ = IVAN_USALKO
+__copyright__ = 'Copyright 2020, proposal_concurrent_futures_scheduled'
+__credits__ = [IVAN_USALKO]
+__license__ = 'Apache 2.0'
+__version__ = '1.0.1'
+__maintainer__ = IVAN_USALKO
+__email__ = 'ivict@rambler.ru'
+__status__ = 'Production'
+
 from concurrent.futures._base import PENDING
 
 from proposal.concurrent.futures.scheduled.scheduled_future import ScheduledFuture

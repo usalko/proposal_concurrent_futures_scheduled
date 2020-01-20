@@ -1,3 +1,14 @@
+#!/usr/bin/env python
+__author_1__ = 'Ivan Usalko'
+__author__ = __author_1__
+__copyright__ = 'Copyright 2020, proposal_concurrent_futures_scheduled'
+__credits__ = [__author_1__]
+__license__ = 'Apache 2.0'
+__version__ = '1.0.1'
+__maintainer__ = __author_1__
+__email__ = 'ivict@rambler.ru'
+__status__ = 'Production'
+
 import time
 from concurrent.futures._base import Future
 
