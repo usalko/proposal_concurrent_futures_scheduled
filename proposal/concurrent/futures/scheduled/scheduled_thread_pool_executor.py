@@ -1,7 +1,8 @@
+import sys
 import threading
 import time
 from concurrent.futures.thread import ThreadPoolExecutor
-from typing import Optional, Callable, Any
+from typing import Optional
 
 from proposal.concurrent.futures.scheduled.delayed_queue import DelayedQueue
 from proposal.concurrent.futures.scheduled.scheduled_future import ScheduledFuture
@@ -47,7 +48,11 @@ class ScheduledThreadPoolExecutor(ThreadPoolExecutor):
     """
 
     def __init__(self, max_workers: Optional[int] = ..., thread_name_prefix: str = ...) -> None:
-        super().__init__(max_workers, thread_name_prefix)
+        if sys.version_info >= (3, 6):
+            super().__init__(max_workers, thread_name_prefix)
+        else:
+            super().__init__(max_workers)
+
         self._work_queue = DelayedQueue()
 
         # SLOW VERSION OF SEQUENCER
