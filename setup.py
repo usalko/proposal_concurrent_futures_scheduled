@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 setuptools.setup(
     name='proposal.concurrent.futures.scheduled',
-    version='1.0.1',
+    version='1.0.2',
     author="Ivan Usalko",
     author_email="ivict@rambler.ru",
     description="Scheduled thread executor",
