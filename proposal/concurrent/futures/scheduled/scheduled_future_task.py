@@ -1,11 +1,11 @@
 #!/usr/bin/env python
-IVAN_USALKO = 'Ivan Usalko'
-__author__ = IVAN_USALKO
+__author_1__ = 'Ivan Usalko'
+__author__ = __author_1__
 __copyright__ = 'Copyright 2020, proposal_concurrent_futures_scheduled'
-__credits__ = [IVAN_USALKO]
+__credits__ = [__author_1__]
 __license__ = 'Apache 2.0'
 __version__ = '1.0.2'
-__maintainer__ = IVAN_USALKO
+__maintainer__ = __author_1__
 __email__ = 'ivict@rambler.ru'
 __status__ = 'Production'
 
